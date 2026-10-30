@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open BEacon | Jibo Portal | 5x1</title>
+<meta name="description" content="Open BEacon, the web app for your Jibo on 5x1. Enter Jibo's IP address to manage his screen, music, looks and skills from your browser.">
+<link rel="canonical" href="https://portal.5x1.com/">
+<meta name="theme-color" content="#111513">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cpath fill='%2301BC61' fill-rule='evenodd' d='M321.71 316A133.48 136.03 0 1 0 179.78 316C163 339 155.5 371 155.5 396C155.5 422 165 435 185 435H317C337 435 345.5 422 345.5 396C345.5 371 337 339 321.71 316ZM349.4 190.97A99.93 96.86 0 1 0 149.54 190.97A99.93 96.86 0 1 0 349.4 190.97Z'/%3E%3Cpath fill='%230AB763' d='M250 118L267 155L305 172.5L267 190L250 227L233 190L195 172.5L233 155Z'/%3E%3C/svg%3E">
+<style>
+/* Tokens and patterns from 5x1.com styles.css */
+:root { color-scheme: dark; --bg: #111513; --panel: #161c18; --text: #eef1ec; --muted: #b0bbb2; --green: #29d780; --line: #303b33; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--green); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; border-radius: 3px; }
+p, h1, h2 { margin: 0; }
+.shell { max-width: 1240px; margin: 0 auto; padding: 0 52px; }
+.skip-link { position: absolute; top: 12px; left: 12px; z-index: 10; transform: translateY(-160%); padding: 12px 18px; background: var(--green); color: var(--bg); }
+.skip-link:focus { transform: translateY(0); }
+.header { height: 104px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 28px; font-weight: 750; letter-spacing: -1.5px; }
+.brand svg { width: 42px; height: 42px; }
+.brand-dot { color: var(--green); }
+nav { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
+nav a:last-child { color: var(--muted); }
+.eyebrow { color: var(--green); font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: 2px; line-height: 1.6; display: flex; gap: 10px; align-items: center; }
+.small-mark { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: center; padding: 90px 0 84px; }
+h1 { font-size: clamp(44px, 5.2vw, 68px); line-height: 1.08; letter-spacing: -3px; font-weight: 600; margin: 23px 0 24px; }
+h1 span { display: block; color: var(--green); }
+.lead { font-size: 20px; line-height: 1.55; letter-spacing: -.3px; }
+.detail { color: var(--muted); font-size: 15px; line-height: 1.8; margin-top: 18px; max-width: 470px; }
+.connect { border: 1px solid var(--line); border-radius: 8px; padding: 30px; background: radial-gradient(ellipse at top, #1c3023 0%, #151b17 70%); }
+.art-label { display: flex; justify-content: space-between; gap: 12px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 26px; }
+.live { display: inline-flex; align-items: center; gap: 7px; }
+.live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+.field { display: flex; align-items: center; background: #0e120f; border: 1px solid var(--line); border-radius: 5px; transition: border-color .15s; }
+.field:focus-within { border-color: var(--green); }
+.field span { padding: 0 0 0 16px; color: var(--muted); font: 15px ui-monospace, SFMono-Regular, Consolas, monospace; }
+.field b { padding: 0 16px 0 0; color: var(--muted); font: 400 15px ui-monospace, SFMono-Regular, Consolas, monospace; }
+input { flex: 1; min-width: 0; min-height: 54px; padding: 0 4px; background: transparent; border: 0; color: var(--text); font: 600 19px ui-monospace, SFMono-Regular, Consolas, monospace; }
+input:focus { outline: none; }
+input::placeholder { color: #5f6b63; font-weight: 400; }
+.hint { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 10px; }
+.error { color: #ff8a80; font-size: 13px; line-height: 1.6; margin-top: 10px; }
+.button { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 32px; min-height: 52px; margin-top: 22px; background: var(--green); color: #0d2015; border: 1px solid var(--green); border-radius: 5px; padding: 13px 20px; font: 650 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; cursor: pointer; }
+.button:hover { background: #66e7a6; border-color: #66e7a6; }
+.recent { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--muted); }
+.recent button { font: 600 13px ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.recent button:hover { border-color: var(--green); color: var(--green); }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 0 0 70px; list-style: none; margin: 0; }
+.steps li { padding: 25px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+.steps .num { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; letter-spacing: .7px; color: var(--muted); font-size: 10px; }
+.steps h2 { font-size: 23px; font-weight: 550; letter-spacing: -.8px; margin-top: 12px; }
+.steps p { font-size: 14px; line-height: 1.75; color: var(--muted); margin-top: 10px; }
+.faq-head { font-size: clamp(26px, 3vw, 34px); font-weight: 550; letter-spacing: -1.1px; line-height: 1.2; margin: 12px 0 26px; }
+.faq { border-top: 1px solid var(--line); margin-bottom: 70px; }
+.faq details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+.faq summary { cursor: pointer; font-size: 17px; line-height: 1.6; }
+.faq summary::marker { color: var(--green); }
+.faq details p { color: var(--muted); line-height: 1.85; max-width: 780px; padding: 14px 0 4px; font-size: 15px; }
+.faq a { text-decoration: underline; text-underline-offset: 3px; }
+code { font: 14px ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; }
+.site-footer { display: flex; justify-content: space-between; gap: 24px; padding: 42px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+.footer-brand { display: inline-block; color: var(--text); font-size: 24px; font-weight: 650; }
+.site-footer p { line-height: 1.8; margin-top: 10px; }
+.site-footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 32px; font-size: 12px; }
+.site-footer nav a { color: var(--muted); }
+@media (max-width: 1000px) { .shell { padding: 0 32px; } .hero { gap: 36px; padding: 64px 0 64px; } }
+@media (max-width: 800px) { .hero { grid-template-columns: minmax(0, 1fr); } .steps { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .shell { padding: 0 22px; } .header { height: 82px; } nav { gap: 18px; font-size: 12px; } nav .wide { display: none; } .brand { font-size: 25px; gap: 3px; } .brand svg { width: 35px; height: 35px; } .hero { padding: 44px 0 52px; } h1 { letter-spacing: -2px; } .lead { font-size: 18px; } .connect { padding: 22px; } .site-footer { flex-direction: column; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="shell">
+<header class="header">
+  <a class="brand" href="https://www.5x1.com/" aria-label="5x1 home"><svg viewBox="0 0 500 500" aria-hidden="true"><path fill="#01BC61" fill-rule="evenodd" d="M321.71 316A133.48 136.03 0 1 0 179.78 316C163 339 155.5 371 155.5 396C155.5 422 165 435 185 435H317C337 435 345.5 422 345.5 396C345.5 371 337 339 321.71 316ZM349.4 190.97A99.93 96.86 0 1 0 149.54 190.97A99.93 96.86 0 1 0 349.4 190.97Z"/><path fill="#0AB763" d="M250 118L267 155L305 172.5L267 190L250 227L233 190L195 172.5L233 155Z"/></svg><span>5x1<span class="brand-dot">.</span></span></a>
+  <nav aria-label="Main navigation"><a class="wide" href="https://www.5x1.com/ecosystem.html">Ecosystem</a><a href="https://www.5x1.com/get-started.html">Get started</a><a href="https://www.5x1.com/beacon.html">About BEacon</a><a href="https://jibo.guide/">Jibo guide <span aria-hidden="true">↗</span></a></nav>
+</header>
+<main id="main">
+  <section class="hero">
+    <div>
+      <p class="eyebrow"><span class="small-mark" aria-hidden="true"></span>Portal</p>
+      <h1>Open BEacon.<span>Your Jibo, in your browser.</span></h1>
+      <p class="lead">Enter Jibo’s IP address to open BEacon, the web app for watching his screen, managing music, changing his look, and installing skills.</p>
+      <p class="detail">Your phone or computer needs to be on the same Wi-Fi as Jibo. The portal only sends you to Jibo’s own address; BEacon runs on Jibo himself.</p>
+    </div>
+    <form class="connect" id="connect" method="POST" action="/" novalidate>
+      <div class="art-label"><span class="live">Connect to Jibo</span><span>BEacon · port 8123</span></div>
+      <label for="ip">Jibo’s IP address</label>
+      <div class="field"><span aria-hidden="true">http://</span><input type="text" id="ip" name="ip" placeholder="192.168.1.100" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" required autofocus aria-describedby="ip-hint ip-error"><b aria-hidden="true">:8123</b></div>
+      <p class="hint" id="ip-hint">It’s on Jibo’s boot screen, or in your router’s list of devices.</p>
+      <p class="error" id="ip-error" role="alert" hidden></p>
+      <button class="button" type="submit">Access BEacon <span aria-hidden="true">→</span></button>
+      <div class="recent" id="recent" hidden><span>Recent:</span></div>
+    </form>
+  </section>
+  <ol class="steps" aria-label="How it works">
+    <li><span class="num">01 / Same Wi-Fi</span><h2>Join Jibo’s network.</h2><p>Use a phone or computer on the same Wi-Fi as Jibo. BEacon isn’t reachable from outside your home network.</p></li>
+    <li><span class="num">02 / Find his IP</span><h2>Get his address.</h2><p>Jibo shows his IP address on his boot screen. Your router’s device list has it too.</p></li>
+    <li><span class="num">03 / Bookmark it</span><h2>Skip the portal next time.</h2><p>BEacon opens at <code>http://&lt;IP&gt;:8123</code>. Bookmark that page to go straight there.</p></li>
+  </ol>
+  <section aria-labelledby="faq-title">
+    <p class="eyebrow"><span class="small-mark" aria-hidden="true"></span>Quick answers</p>
+    <h2 class="faq-head" id="faq-title">Can’t connect?</h2>
+    <div class="faq">
+      <details><summary>The page won’t load after I click Access BEacon.</summary><p>Make sure Jibo is on and finished booting, that your device is on the same Wi-Fi, and that the IP address is right. If his IP changed, check his boot screen or your router again.</p></details>
+      <details><summary>My browser says the connection is “not secure.”</summary><p>BEacon is served from Jibo over your home network with plain <code>http://</code>, so browsers show this notice. It’s expected for a device on your own Wi-Fi.</p></details>
+      <details><summary>Does BEacon need my Jibo to be on 5x1?</summary><p>Yes. BEacon comes with 5x1’s community software. If you haven’t set Jibo up yet, start with the <a href="https://jibo.guide/mod/pmscript/">Connect to 5x1 guide</a>.</p></details>
+      <details><summary>Does the portal store my IP address?</summary><p>Recent addresses are saved only in this browser, so you can tap them next time. Clear them anytime with <a href="#" id="forget">Forget recent addresses</a>.</p></details>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+  <div><a class="footer-brand" href="https://www.5x1.com/">5x1.</a><p>A home for the BEcosystem.<br>Community software for Jibo.</p></div>
+  <nav aria-label="Footer navigation"><a href="https://www.5x1.com/ecosystem.html">The projects</a><a href="https://www.5x1.com/get-started.html">Getting started</a><a href="https://www.5x1.com/community.html">Community &amp; resources</a><a href="https://jibo.guide/">Jibo guide ↗</a><a href="https://www.5x1.com/privacy.html">Privacy policy</a></nav>
+</footer>
+</div>
+<script>
+// Goes straight to Jibo in the browser; without JavaScript the form still POSTs `ip` to the portal server as before.
+function beaconUrl(raw) {
+  var v = String(raw || '').trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/:\d*$/, '');
+  var ipv4 = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+  var host = /^(?=.{1,253}$)[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$/i;
+  if (!ipv4.test(v) && !(host.test(v) && /[a-z]/i.test(v))) return null;
+  return { host: v.toLowerCase(), url: 'http://' + v.toLowerCase() + ':8123/' };
+}
+var KEY = 'portal.recent';
+function recent() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+function go(raw) {
+  var r = beaconUrl(raw), err = document.getElementById('ip-error');
+  if (!r) { err.textContent = 'Enter an IP address like 192.168.1.100.'; err.hidden = false; document.getElementById('ip').focus(); return; }
+  err.hidden = true;
+  try { localStorage.setItem(KEY, JSON.stringify([r.host].concat(recent().filter(function (h) { return h !== r.host; })).slice(0, 3))); } catch (e) {}
+  location.href = r.url;
+}
+document.getElementById('connect').addEventListener('submit', function (e) { e.preventDefault(); go(document.getElementById('ip').value); });
+var box = document.getElementById('recent');
+recent().forEach(function (h) { var b = document.createElement('button'); b.type = 'button'; b.textContent = h; b.onclick = function () { document.getElementById('ip').value = h; go(h); }; box.appendChild(b); box.hidden = false; });
+document.getElementById('forget').addEventListener('click', function (e) { e.preventDefault(); try { localStorage.removeItem(KEY); } catch (x) {} box.hidden = true; });
+</script>
+</body>
+</html>
